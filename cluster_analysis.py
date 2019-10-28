@@ -30,7 +30,7 @@ for col_name in df.columns:
     if df[col_name].dtypes == 'object':
         unique_cat = len(df[col_name].unique())
         print("Feature '{col_name}' has {unique_cat}".format(col_name=col_name, unique_cat= unique_cat))
-        
+
 
 
 todummy = ['Gender','Job_Type','Race']
@@ -41,24 +41,22 @@ def dummy_data(df, todummy):
         df= df.drop(x, 1)
         df = pd.concat([df, dummies], axis=1)
     return df
-    
+
 new_data = dummy_data(df, todummy)
 
 y = new_data.loc[:,['Interviewed']]
 y = y*1
-#y= y.values.tolist()
+
 
 
 x = new_data.drop(columns = 'Name')
 x = x.drop(columns = 'Interviewed')
 x= x.drop(columns='id')
 x = x.drop(columns = 'Age')
-#x['labels']= y['Interviewed']
 
-# by default the outlier fraction is 0.1 in generate data function 
 outlier_fraction = 0.1
 
-# store outliers and inliers in different numpy arrays
+
 np.random.seed(1)
 clf = IsolationForest(behaviour = 'new', n_estimators= 100, max_samples = 200, random_state =1 , contamination = 0.04)
 
@@ -67,10 +65,12 @@ preds = clf.fit_predict(x)
 
 x['preds']= preds
 x['labels']= y
-#separate the two features and use it to plot the data 
+
 new_x = x.loc[x['preds'] == -1]
 fresh_x = x.loc[x['preds'] == 1]
-# create a meshgrid 
+
+export_csv = fresh_x.to_csv (r'C:\Users\sb00747428\Downloads\datathon\Smashfly_\fresh_x.csv', index = None, header=True)
+export_csv2 = new_x.to_csv (r'C:\Users\sb00747428\Downloads\datathon\Smashfly_\new_x.csv', index = None, header=True)
 xx , yy = np.meshgrid(np.linspace(-10, 10, 200), np.linspace(-10, 10, 200))
 
 
@@ -123,7 +123,7 @@ for i, (clf_name,clf) in enumerate(classifiers.items()) :
     subplot.contourf(xx, yy, Z, levels=[threshold, Z.max()],colors='orange')
 
     # scatter plot of inliers with white dots
-    b = subplot.scatter(x[:-n_outliers, 0], x[:-n_outliers, 1], c='white',s=20, edgecolor='k') 
+    b = subplot.scatter(x[:-n_outliers, 0], x[:-n_outliers, 1], c='white',s=20, edgecolor='k')
     # scatter plot of outliers with black dots
     c = subplot.scatter(x[-n_outliers:, 0], x[-n_outliers:, 1], c='black',s=20, edgecolor='k')
     subplot.axis('tight')
@@ -137,12 +137,12 @@ for i, (clf_name,clf) in enumerate(classifiers.items()) :
     subplot.set_title(clf_name)
     subplot.set_xlim((-10, 10))
     subplot.set_ylim((-10, 10))
-    plt.show() 
-    
+    plt.show()
+
   fresh_x = pd.read_csv('fresh_x.csv')
 accounting = fresh_x.loc[fresh_x['Job_Type_Accounting'] == 1]
 
-female = accounting.loc[accounting['Gender_F']==1] 
+female = accounting.loc[accounting['Gender_F']==1]
 male = accounting.loc[accounting['Gender_M']==1]
 x1 = female.loc[:,['GPA']]
 x2 = male.loc[:,['GPA']]
