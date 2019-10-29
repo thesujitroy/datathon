@@ -22,10 +22,10 @@ fresh_x =pd.read_csv('fresh_x.csv')
 #    if df[col_name].dtypes == 'object':
 #        unique_cat = len(df[col_name].unique())
 #        print("Feature '{col_name}' has {unique_cat}".format(col_name=col_name, unique_cat= unique_cat))
-        
-        
-        
-        
+
+
+
+
 #df = df.drop(columns =)
 #
 #todummy = ['Gender','Job_Type','Race']
@@ -36,7 +36,7 @@ fresh_x =pd.read_csv('fresh_x.csv')
 #        df= df.drop(x, 1)
 #        df = pd.concat([df, dummies], axis=1)
 #    return df
-#    
+#
 #new_data = dummy_data(df, todummy)
 #
 #y = new_data.loc[:,['Interviewed']]
